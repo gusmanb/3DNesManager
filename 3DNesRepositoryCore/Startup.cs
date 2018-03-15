@@ -31,6 +31,7 @@ namespace _3DNesRepositoryCore
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
                 c.AddSecurityDefinition("Basic", new BasicAuthScheme { Description = "Basic authentication" });
                 c.DocumentFilter<BasicAuthFilter>();
+                c.OperationFilter<FileOperationFilter>();
             });
 
             services.AddMvc();
@@ -44,10 +45,7 @@ namespace _3DNesRepositoryCore
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger(c => 
-            {
-                
-            });
+            app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using _3DNesRepositoryCore.Classes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,7 @@ namespace _3DNesRepositoryCore.Controllers
         [ProducesResponseType(409)]
         public IActionResult CreateUser(string UserName, string LoginName, string Password)
         {
-
-            bool isAdmin = LoginName == "geniwab@gmail.com" || UserName == "geod";
-
-            if (!DbManager.AddUser(UserName, LoginName, Password))
+            if (!DbManager.AddUser(UserName, LoginName, Password, Helpers.IsAdmin(UserName)))
                 return new StatusCodeResult(409);
 
             return new NoContentResult();

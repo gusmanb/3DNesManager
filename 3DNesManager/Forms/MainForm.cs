@@ -19,6 +19,8 @@ namespace _3DNesManager
         string[] roms;
         string[] nFiles;
 
+        Remote3DNInfo[] loadedInfos;
+
         public MainForm()
         {
             InitializeComponent();
@@ -157,20 +159,24 @@ namespace _3DNesManager
                 var prg = item.SubItems[4].Text;
                 var chr = item.SubItems[5].Text;
 
-                Load3DNFiles(item.Text, prg, chr);
+                Load3DNFiles(prg, chr);
 
             }
         }
 
-        private void Load3DNFiles(string FileName, string Prg, string Chr)
+        private async Task Load3DNFiles(string Prg, string Chr)
         {
 
             Clear3DNList();
 
-            bool exists = File.Exists(Path.Combine(_3dnPath, FileName + ".3dn"));
+            loadedInfos = await CommTools.ListRomFiles(Prg, Chr);
 
-            if (exists)
-                lst3DN.Items.Add("Local 3DN");
+            foreach (var info in loadedInfos)
+            {
+                var item = lst3DN.Items.Add(info.Name);
+                item.SubItems.Add(info.Exact ? "✓" : "✘");
+                item.SubItems.Add(info.Official ? "✓" : "✘");
+            }
 
         }
 
@@ -178,6 +184,14 @@ namespace _3DNesManager
         {
             lst3DN.Items.Clear();
             prop3DN.SelectedObject = null;
+        }
+
+        private void lst3DN_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lst3DN.SelectedIndices == null || lst3DN.SelectedIndices.Count != 1)
+                prop3DN.SelectedObject = null;
+            else
+                prop3DN.SelectedObject = loadedInfos[lst3DN.SelectedIndices[0]];
         }
     }
 }

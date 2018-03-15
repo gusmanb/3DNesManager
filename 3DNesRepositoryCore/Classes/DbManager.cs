@@ -139,12 +139,25 @@ namespace _3DNesRepositoryCore
             using (var db = new LiteDatabase("nesroms.db"))
             {
                 var infoCol = db.GetCollection<_3DNFileInfo>();
+                var romCol = db.GetCollection<NESRom>();
 
                 List<_3DNFileInfo> infos = new List<_3DNFileInfo>();
 
-                return infoCol
-                    .Include(i => i.Creator)
-                    .Find(i => i.Rom.PRGSHA == Prg).ToList();
+                var roms = romCol.Find(r => r.PRGSHA == Prg).ToArray();
+
+                if (roms.Length == 0)
+                    return infos;
+
+
+                foreach (var rom in roms)
+                {
+                    infos.AddRange( infoCol
+                        .Include(i => i.Creator)
+                        .Include(i => i.Rom)
+                        .Find(i => i.Rom.Id == rom.Id));
+                }
+
+                return infos;
             }
         }
 
@@ -154,7 +167,7 @@ namespace _3DNesRepositoryCore
             {
                 var col = db.GetCollection<_3DNFile>();
                 ObjectId id = new ObjectId(Id);
-                return col.FindOne(f => f.Info.Id == id);
+                return col.FindById(id);
             }
         }
 
@@ -185,7 +198,7 @@ namespace _3DNesRepositoryCore
                 if (rom == null)
                     return false;
 
-                var exist = infos.Exists(i => i.Creator == user && i.Rom == rom);
+                var exist = infos.Exists(i => i.Creator.Id == user.Id && i.Rom.Id == rom.Id);
 
                 if (exist)
                     return false;
@@ -194,6 +207,79 @@ namespace _3DNesRepositoryCore
                 infos.Insert(newInfo);
                 files.Insert(new _3DNFile { Info = newInfo, Content = Content });
 
+                return true;
+            }
+        }
+
+        public static bool UpdateFile(string OwnerLoginName, string Prg, string Chr, string Name, string Notes, bool Official, byte[] Content)
+        {
+            string ver = null;
+
+            if (Content != null)
+            {
+                MemoryStream ms = new MemoryStream(Content);
+                var info = _3DNTools.GetFileInfo(ms);
+                ms.Dispose();
+
+                if (info == null || info.Title != "3dn")
+                    return false;
+
+                ver = info.Version;
+
+            }
+
+            using (var db = new LiteDatabase("nesroms.db"))
+            {
+                var infos = db.GetCollection<_3DNFileInfo>();
+
+                var actualInfo = infos.FindOne(i => i.Rom.PRGSHA == Prg && i.Rom.CHRSHA == Chr && i.Creator.LoginName == OwnerLoginName);
+
+                if (actualInfo == null)
+                    return false;
+
+                if (actualInfo.Creator.LoginName != OwnerLoginName)
+                    return false;
+
+                actualInfo.Name = Name;
+                actualInfo.Notes = Notes;
+                actualInfo.Official = Official;
+                actualInfo.CreationDate = DateTime.Now;
+
+                if (Content != null)
+                    actualInfo.TypeVersion = ver;
+
+                if (!infos.Update(actualInfo))
+                    return false;
+
+                if (Content != null)
+                {
+                    var files = db.GetCollection<_3DNFile>();
+
+                    var file = files.FindOne(f => f.Info.Id == actualInfo.Id);
+
+                    if (file == null)
+                        return false;
+
+                    file.Content = Content;
+
+                    return files.Update(file);
+                }
+                
+                return true;
+            }
+        }
+
+        public static bool DeleteFile(string Id)
+        {
+            using (var db = new LiteDatabase("nesroms.db"))
+            {
+                var infos = db.GetCollection<_3DNFileInfo>();
+                var files = db.GetCollection<_3DNFile>();
+
+                ObjectId id = new ObjectId(Id);
+
+                files.Delete(f => f.Info.Id == id);
+                infos.Delete(id);
                 return true;
             }
         }

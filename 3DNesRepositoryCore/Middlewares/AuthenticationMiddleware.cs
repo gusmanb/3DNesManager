@@ -14,7 +14,10 @@ namespace _3DNesRepositoryCore.Middlewares
         AuthorizedPath[] AuthenticatedRoutes = new AuthorizedPath[] 
         {
             new AuthorizedPath{ Method = "DELETE", Path = "/api/User" },
-            new AuthorizedPath{ Method = "GET", Path = "/api/User" }
+            new AuthorizedPath{ Method = "GET", Path = "/api/User" },
+            new AuthorizedPath{ Method = "POST", Path = "/api/3DN" },
+            new AuthorizedPath{ Method = "PUT", Path = "/api/3DN" },
+            new AuthorizedPath{ Method = "DELETE", Path = "/api/3DN" }
         };
 
         private readonly RequestDelegate next;
