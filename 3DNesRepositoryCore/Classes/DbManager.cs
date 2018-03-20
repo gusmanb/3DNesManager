@@ -33,7 +33,7 @@ namespace _3DNesRepositoryCore
                     var infos = db.GetCollection<_3DNFileInfo>();
                     infos.EnsureIndex("RomId");
                     var files = db.GetCollection<_3DNFile>();
-                    users.EnsureIndex("InfoId", true);
+                    files.EnsureIndex("InfoId", true);
                 }
             }
         }

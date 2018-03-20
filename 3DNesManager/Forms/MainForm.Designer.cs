@@ -36,12 +36,17 @@
             this.prop3DN = new System.Windows.Forms.PropertyGrid();
             this.lst3DN = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.credentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.createAccountToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -50,6 +55,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstRoms
@@ -64,7 +70,7 @@
             this.lstRoms.HideSelection = false;
             this.lstRoms.Location = new System.Drawing.Point(0, 0);
             this.lstRoms.Name = "lstRoms";
-            this.lstRoms.Size = new System.Drawing.Size(674, 606);
+            this.lstRoms.Size = new System.Drawing.Size(550, 513);
             this.lstRoms.TabIndex = 0;
             this.lstRoms.UseCompatibleStateImageBehavior = false;
             this.lstRoms.View = System.Windows.Forms.View.Details;
@@ -98,7 +104,7 @@
             this.prop3DN.Location = new System.Drawing.Point(0, 0);
             this.prop3DN.Name = "prop3DN";
             this.prop3DN.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.prop3DN.Size = new System.Drawing.Size(284, 250);
+            this.prop3DN.Size = new System.Drawing.Size(271, 212);
             this.prop3DN.TabIndex = 2;
             this.prop3DN.ToolbarVisible = false;
             // 
@@ -115,7 +121,7 @@
             this.lst3DN.HideSelection = false;
             this.lst3DN.Location = new System.Drawing.Point(3, 3);
             this.lst3DN.Name = "lst3DN";
-            this.lst3DN.Size = new System.Drawing.Size(278, 317);
+            this.lst3DN.Size = new System.Drawing.Size(265, 262);
             this.lst3DN.TabIndex = 3;
             this.lst3DN.UseCompatibleStateImageBehavior = false;
             this.lst3DN.View = System.Windows.Forms.View.Details;
@@ -126,22 +132,22 @@
             this.columnHeader1.Text = "Name";
             this.columnHeader1.Width = 153;
             // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Official";
-            this.columnHeader2.Width = 45;
-            // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Exact";
             this.columnHeader3.Width = 39;
             // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Official";
+            this.columnHeader2.Width = 45;
+            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(3, 326);
+            this.button1.Location = new System.Drawing.Point(3, 271);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 23);
+            this.button1.Size = new System.Drawing.Size(136, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "Download";
             this.button1.UseVisualStyleBackColor = true;
@@ -149,9 +155,9 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(147, 326);
+            this.button2.Location = new System.Drawing.Point(145, 271);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(134, 23);
+            this.button2.Size = new System.Drawing.Size(123, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Upload";
             this.button2.UseVisualStyleBackColor = true;
@@ -159,7 +165,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -169,8 +175,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(962, 606);
-            this.splitContainer1.SplitterDistance = 674;
+            this.splitContainer1.Size = new System.Drawing.Size(825, 513);
+            this.splitContainer1.SplitterDistance = 550;
             this.splitContainer1.TabIndex = 6;
             // 
             // splitContainer2
@@ -189,17 +195,58 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.prop3DN);
-            this.splitContainer2.Size = new System.Drawing.Size(284, 606);
-            this.splitContainer2.SplitterDistance = 352;
+            this.splitContainer2.Size = new System.Drawing.Size(271, 513);
+            this.splitContainer2.SplitterDistance = 297;
             this.splitContainer2.TabIndex = 6;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.credentialsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(825, 24);
+            this.menuStrip1.TabIndex = 7;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // credentialsToolStripMenuItem
+            // 
+            this.credentialsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.createAccountToolStripMenuItem1});
+            this.credentialsToolStripMenuItem.Name = "credentialsToolStripMenuItem";
+            this.credentialsToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.credentialsToolStripMenuItem.Text = "Session";
+            // 
+            // startSessionToolStripMenuItem
+            // 
+            this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startSessionToolStripMenuItem.Text = "Start session";
+            this.startSessionToolStripMenuItem.Click += new System.EventHandler(this.startSessionToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // createAccountToolStripMenuItem1
+            // 
+            this.createAccountToolStripMenuItem1.Name = "createAccountToolStripMenuItem1";
+            this.createAccountToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.createAccountToolStripMenuItem1.Text = "Create account";
+            this.createAccountToolStripMenuItem1.Click += new System.EventHandler(this.createAccountToolStripMenuItem1_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 606);
+            this.ClientSize = new System.Drawing.Size(825, 537);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "3DNes Manager";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -210,7 +257,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -230,6 +280,11 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem credentialsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem createAccountToolStripMenuItem1;
     }
 }
 

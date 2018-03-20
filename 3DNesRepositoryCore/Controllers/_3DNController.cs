@@ -46,6 +46,7 @@ namespace _3DNesRepositoryCore.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(409)]
         [Consumes("multipart/form-data")]
+        [Produces("text/plain")]
         public IActionResult CreateFile([FromForm]_3DNCreateUpdateDTO Data)
         {
             if (Data.Content == null)
@@ -72,6 +73,7 @@ namespace _3DNesRepositoryCore.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [Consumes("multipart/form-data")]
+        [Produces("text/plain")]
         public IActionResult UpdateFile([FromForm]_3DNCreateUpdateDTO Data)
         {
             var name = HttpContext.Request.Headers["LoginName"];

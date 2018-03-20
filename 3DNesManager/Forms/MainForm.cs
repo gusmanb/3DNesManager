@@ -1,4 +1,5 @@
 ﻿using _3DNesManager.Classes;
+using _3DNesManager.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,8 @@ namespace _3DNesManager
         string romPath;
         string[] roms;
         string[] nFiles;
+        string passwd;
+        string login;
 
         Remote3DNInfo[] loadedInfos;
 
@@ -92,7 +95,7 @@ namespace _3DNesManager
                 else
                 {
                     item.SubItems[1].Text = dbRom.Name;
-                    item.SubItems[2].Text = dbRom.PAL.ToString();
+                    item.SubItems[2].Text = dbRom.PAL == Pal.Yes ? "PAL" : dbRom.PAL == Pal.Unknown ? "-" : "NTSC";
                 }
 
                 if(nFile)
@@ -128,7 +131,7 @@ namespace _3DNesManager
                 var pal = rom?.PAL ?? Pal.Unknown;
 
                 item.SubItems[1].Text = rom?.Name ?? "⊗";
-                item.SubItems[2].Text = pal == Pal.Yes ? "✓" : pal == Pal.Unknown ? "⊗" : "✘";
+                item.SubItems[2].Text = pal == Pal.Yes ? "PAL" : pal == Pal.Unknown ? "⊗" : "NTSC";
             }
         }
 
@@ -192,6 +195,30 @@ namespace _3DNesManager
                 prop3DN.SelectedObject = null;
             else
                 prop3DN.SelectedObject = loadedInfos[lst3DN.SelectedIndices[0]];
+        }
+        
+        private void createAccountToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            using (RegisterForm rg = new RegisterForm())
+            {
+                if (rg.ShowDialog() != DialogResult.OK)
+                    return;
+
+                login = rg.LoginName;
+                passwd = rg.Password;
+            }
+        }
+
+        private void startSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (LoginForm lg = new LoginForm())
+            {
+                if (lg.ShowDialog() != DialogResult.OK)
+                    return;
+
+                login = lg.LoginName;
+                passwd = lg.Password;
+            }
         }
     }
 }

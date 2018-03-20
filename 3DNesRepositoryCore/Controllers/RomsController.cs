@@ -8,12 +8,13 @@ using _3DNesRepositoryCore.Models;
 
 namespace _3DNesRepositoryCore.Controllers
 {
-    [Produces("application/json")]
+    
     [Route("api/[controller]")]
     public class RomsController : Controller
     {
         [HttpGet("{Prg}/{Chr}", Name = "GetRom")]
         [ProducesResponseType(typeof(NesRomDTO), 200)]
+        [Produces("application/json")]
         public IActionResult GetById(string Prg, string Chr)
         {
             var rom = DbManager.FindRom(Prg, Chr);

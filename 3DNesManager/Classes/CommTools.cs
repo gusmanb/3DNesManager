@@ -51,12 +51,51 @@ namespace _3DNesManager.Classes
             {
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(baseAddress);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await client.GetAsync($"3DN/{Fileinfo.Id}");
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch { return null; }
         }
+
+        public static async Task<bool> CreateUser(string UserName, string LoginName, string Password)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(baseAddress);
+                var content = new StringContent(JsonConvert.SerializeObject(new UserData { LoginName = LoginName, Password = Password, UserName = UserName }), Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.PutAsync($"User", content);
+                return response.StatusCode == System.Net.HttpStatusCode.NoContent;
+            }
+            catch { return false; }
+        }
+
+        public static async Task<string> LoginUser(string LoginName, string Password)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(baseAddress);
+                AddAuth(client, LoginName, Password);
+                HttpResponseMessage response = await client.GetAsync($"User");
+
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch { return null; }
+        }
+
+        private static void AddAuth(HttpClient client, string LoginName, string Password)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{LoginName}:{Password}")));
+        }
+    }
+
+    public class UserData
+    {
+        public string UserName { get; set; }
+        public string LoginName { get; set; }
+        public string Password { get; set; }
     }
 
     public class RomInfo

@@ -115,6 +115,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConfigForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Path configuration";
             this.ResumeLayout(false);
             this.PerformLayout();

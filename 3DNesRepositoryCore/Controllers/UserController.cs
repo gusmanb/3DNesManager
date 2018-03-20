@@ -1,4 +1,5 @@
 ﻿using _3DNesRepositoryCore.Classes;
+using _3DNesRepositoryCore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace _3DNesRepositoryCore.Controllers
 {
-    [Produces("text/plain")]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
         [HttpGet(Name = "GetUserName")]
         [ProducesResponseType(209)]
         [ProducesResponseType(404)]
+        [Produces("text/plain")]
         public IActionResult GetUserName()
         {
             var name = HttpContext.Request.Headers["LoginName"];
@@ -30,9 +31,10 @@ namespace _3DNesRepositoryCore.Controllers
         [HttpPut(Name = "CreateUser")]
         [ProducesResponseType(204)]
         [ProducesResponseType(409)]
-        public IActionResult CreateUser(string UserName, string LoginName, string Password)
+        [Produces("text/plain")]
+        public IActionResult CreateUser([FromBody]UserCreateDTO Data)
         {
-            if (!DbManager.AddUser(UserName, LoginName, Password, Helpers.IsAdmin(UserName)))
+            if (!DbManager.AddUser(Data.UserName, Data.LoginName, Data.Password, Helpers.IsAdmin(Data.UserName)))
                 return new StatusCodeResult(409);
 
             return new NoContentResult();
@@ -41,6 +43,7 @@ namespace _3DNesRepositoryCore.Controllers
         [HttpDelete(Name = "Deleteuser")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Produces("text/plain")]
         public IActionResult DeleteUser()
         {
             
